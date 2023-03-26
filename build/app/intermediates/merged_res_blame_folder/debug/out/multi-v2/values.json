@@ -1,8 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "com.my_todo.my_todo.app-mergeDebugResources-5:/values/values.xml",
+            "outputFile": "com.my_todo.my_todo.app-mergeDebugResources-9:/values/values.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\Davi\\Documents\\GitHub\\my_todo\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "176,832",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "483,998"
+                    },
+                    "to": {
+                        "startLines": "93,97",
+                        "startColumns": "4,4",
+                        "startOffsets": "5462,5643",
+                        "endLines": "96,99",
+                        "endColumns": "12,12",
+                        "endOffsets": "5638,5807"
+                    }
+                },
                 {
                     "source": "C:\\Users\\Davi\\.gradle\\caches\\transforms-3\\4ca28c4a71705f8a687c69dda140a277\\transformed\\core-1.6.0\\res\\values\\values.xml",
                     "from": {
@@ -39,25 +58,6 @@
                         "endLines": "7,8,9,10,72,118,122,236,248,256",
                         "endColumns": "11,59,51,44,59,24,24,24,24,24",
                         "endOffsets": "289,349,401,446,4387,6899,7030,10987,11427,11736"
-                    }
-                },
-                {
-                    "source": "C:\\Dev\\Flutter\\my_todo\\android\\app\\src\\main\\res\\values\\styles.xml",
-                    "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "176,832",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "483,998"
-                    },
-                    "to": {
-                        "startLines": "93,97",
-                        "startColumns": "4,4",
-                        "startOffsets": "5462,5643",
-                        "endLines": "96,99",
-                        "endColumns": "12,12",
-                        "endOffsets": "5638,5807"
                     }
                 }
             ]

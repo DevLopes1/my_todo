@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.my_todo.my_todo.app-mergeDebugResources-5:/values-lo/values-lo.xml",
+            "outputFile": "com.my_todo.my_todo.app-mergeDebugResources-9:/values-lo/values-lo.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Davi\\.gradle\\caches\\transforms-3\\4ca28c4a71705f8a687c69dda140a277\\transformed\\core-1.6.0\\res\\values-lo\\values-lo.xml",

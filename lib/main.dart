@@ -1,70 +1,168 @@
 import 'package:flutter/material.dart';
+import 'package:my_todo/Database/BancoDados.dart';
+import 'package:my_todo/Models/TarefasModel.dart';
+import 'package:my_todo/Tarefas.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  BancoDados.abrirBanco();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  //teste
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HomePageState extends State<HomePage> {
+  TextEditingController _texto = TextEditingController();
+  TextEditingController _titulo = TextEditingController();
+  int _indexPages = 0;
+  int idret = 0;
+  List<Map<dynamic, dynamic>>? taf;
 
-  void _incrementCounter() {
+  addTodoDialog() {
+    //limpando campos!
     setState(() {
-      _counter++;
+      _texto.text = "";
+      _titulo.text = "";
     });
+
+    AlertDialog alertErroCampos = AlertDialog(
+      actions: [
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Ok")),
+      ],
+      content: Text("Erro! Preencha todos os campos!"),
+    );
+
+    TextButton botaoSalvar = TextButton(
+      onPressed: () async {
+        if (_texto.text != "" || _titulo.text != "") {
+          TarefasModel tarefa = TarefasModel();
+          tarefa.texto = _texto.text;
+          tarefa.titulo = _titulo.text;
+
+          await TarefasRepositorio.addTarefa(tarefa);
+          Navigator.pop(context);
+          //possivel setstate aq
+        } else {
+          showDialog(context: context, builder: (context) => alertErroCampos);
+        }
+      },
+      child: const Text(
+        "Salvar",
+        style: TextStyle(color: Colors.white),
+      ),
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.blue)),
+    );
+
+    AlertDialog addTodoAlert = AlertDialog(
+      actions: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _titulo,
+                decoration: InputDecoration(labelText: "Título"),
+              ),
+              TextFormField(
+                controller: _texto,
+                decoration: InputDecoration(labelText: "Texto"),
+              ),
+              botaoSalvar,
+            ],
+          ),
+        ),
+      ],
+      content: Text("Adicionar Tarefa!"),
+    );
+
+    showDialog(context: context, builder: (context) => addTodoAlert);
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("My To do"),
+          backgroundColor: Colors.blue[800],
+        ),
+        backgroundColor: Colors.white,
+        body: IndexedStack(
+          index: _indexPages,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        taf = await TarefasRepositorio.listarTarefas();
+                        setState(() {});
+                      },
+                      child: Text("CONSULTA SQL!")),
+                  Text(
+                    "texto: id: ${idret.toString()} ${taf.toString()}",
+                    style: TextStyle(fontSize: 23),
+                  ),
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Tarefas(),
+            Column(
+              children: const [
+                Text(
+                  "Apenas um  Texto 3",
+                  style: TextStyle(fontSize: 23),
+                ),
+              ],
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: addTodoDialog,
+            backgroundColor: Colors.blue[800],
+            child: Icon(Icons.add)),
+        bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.white70,
+            unselectedItemColor: Colors.blue[800],
+            selectedItemColor: Colors.blue,
+            currentIndex: _indexPages,
+            onTap: (index) {
+              setState(() {
+                _indexPages = index;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+              BottomNavigationBarItem(icon: Icon(Icons.task), label: "Tarefas"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: "Configurações"),
+            ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
