@@ -1,7 +1,3 @@
-my_todo
-2.19
-file:///C:/Dev/Flutter/my_todo/
-file:///C:/Dev/Flutter/my_todo/lib/
 async
 2.18
 file:///C:/Users/Davi/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.10.0/
@@ -86,6 +82,10 @@ vector_math
 2.14
 file:///C:/Users/Davi/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/
 file:///C:/Users/Davi/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/lib/
+my_todo
+2.19
+file:///C:/Users/Davi/Documents/GitHub/my_todo/
+file:///C:/Users/Davi/Documents/GitHub/my_todo/lib/
 sky_engine
 2.12
 file:///C:/src/flutter/bin/cache/pkg/sky_engine/
